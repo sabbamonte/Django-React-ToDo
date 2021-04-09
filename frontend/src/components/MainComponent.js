@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import AddTask from "./AddTaskComponent";
+import DeleteTask from "./DeleteTaskComponent";
+import EditTask from "./EditTaskComponent";
 
 
 class Main extends Component {
@@ -60,12 +62,18 @@ class Main extends Component {
                                 <p>{task.body}</p>
                                 <p input type={Date}>{task.timestamp.substring(0,10)}</p>
                                 <p>{task.completed}</p>
+                                {task.id ? <div>
+                                    <DeleteTask toDelete={task.id}/> 
+                                    <EditTask editTask={task}/>
+                                </div>: null}
+
                             </div>)}
+                            
                         </ul>
                     </div>
                 </div>
             </div>
-            <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+            <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} closeTimeoutMS={500}>
                 <ModalHeader toggle={this.toggleModal}>Add New Task</ModalHeader>
                 <ModalBody>
                        <AddTask/>

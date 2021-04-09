@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import {Button, Form, FormGroup, Label, Input, Col} from 'reactstrap';
+import {Button, Form, FormGroup, Label, Input, Col, FormFeedback} from 'reactstrap';
 
 class AddTask extends Component {
     constructor(props) {
@@ -10,7 +10,11 @@ class AddTask extends Component {
             title: '',
             body: '',
             timestamp: new Date(),
-            completed: false
+            completed: false,
+            touched: {
+                title: false,
+            }
+ 
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,12 +32,42 @@ class AddTask extends Component {
   
     }
 
-    handleSubmit(event) {
-        alert("Current State is: " + JSON.stringify(this.state));
-        event.preventDefault(); // This means it won’t reload page
+    handleSubmit() {
+       
+        axios.post('/api/tasks/', {
+            task: this.state.title,
+            body: this.state.body,
+            timestamp: this.state.timestamp,
+            completed: this.state.completed
+
+        })
+        .then((response) => {
+            console.log(response);
+          }, (error) => {
+            console.log(error);
+       
+        })
     }
-    
+
+    handleBlur = (field) => (evt) => {
+        this.setState({
+            touched: { ...this.state.touched, [field]: true } //Spread Operator
+        });
+    } 
+
+    validate(title) { // Inputs as parameters
+        const errors = { // Create object called errors, recreate a this.state
+            title: ''
+        };
+     // Error check all of them
+        if (this.state.touched.title && title.length < 3)
+            errors.title = 'Title should be >= 3 characters';
+  
+        return errors; // Return the errors
+    }
+ 
     render() {
+        const errors = this.validate(this.state.title);
         return(
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup row>
@@ -41,7 +75,10 @@ class AddTask extends Component {
                     <Col md={10}>
                         <Input type="text" id="title" name="title"
                         value={this.state.title}
-                        onChange={this.handleInputChange} /> 
+                        onBlur={this.handleBlur('title')}
+                        onChange={this.handleInputChange}
+                        invalid={errors.title !== ''}/> 
+                        <FormFeedback>{errors.title}</FormFeedback>
                     </Col>
                 </FormGroup>
                 <FormGroup row>
