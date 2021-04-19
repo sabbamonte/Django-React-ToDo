@@ -11,7 +11,7 @@ class DeleteTask extends Component {
 
     handleSubmit() {
         
-        axios.delete(`/api/tasks/${this.props}`)
+        axios.delete(`/api/tasks/${this.props.toDelete}`)
     
         .then((response) => {
             console.log(response);

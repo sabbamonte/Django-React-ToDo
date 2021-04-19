@@ -12,17 +12,19 @@ class Main extends Component {
 
         this.state = {
             Tasks: [],
-            isModalOpen: false
+            isModalOpen: false,
+            isToggle: false
         };
 
         this.toggleModal = this.toggleModal.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     createTaskList = () => {
         axios
             .get("/api/tasks/")
             .then((res) => {
-
+            
                 this.setState({
                     Tasks: res.data
                 })
@@ -43,6 +45,12 @@ class Main extends Component {
         });
     }
 
+    handleClick() {
+        this.setState({
+            isToggle: !this.state.isToggle,
+        })
+    }
+
     render() {
         return (
         <div className="container">
@@ -54,21 +62,35 @@ class Main extends Component {
                             <button onClick={this.toggleModal} className="btn btn-dark">
                                 Add task
                             </button>
+                            <button onClick={this.handleClick} className="btn btn-dark">
+                                {this.state.isToggle === false ? "Completed" : "Open Tasks"}
+                            </button> 
                         </div>
                         <ul className="list-group list-group-flush border-top-0">
                             {this.state.Tasks.map((task) => 
-                            <div key={task.id} className="list-group-item">
-                                <h6>{task.task}</h6>
-                                <p>{task.body}</p>
-                                <p input type={Date}>{task.timestamp.substring(0,10)}</p>
-                                <p>{task.completed}</p>
-                                {task.id ? <div>
-                                    <DeleteTask toDelete={task.id}/> 
-                                    <EditTask editTask={task}/>
-                                </div>: null}
-
-                            </div>)}
-                            
+                                this.state.isToggle === true && task.completed === true ?  
+                                    <div key={task.id} className="list-group-item">
+                                        <h6>{task.task}</h6>
+                                        <p>{task.body}</p>
+                                        <p input type={Date}>{task.timestamp.substring(0,10)}</p>
+                                        <p>{task.completed}</p>
+                                        {task.id ? <div>
+                                            <DeleteTask toDelete={task.id}/> 
+                                        </div>: null}
+                                    </div> 
+                                : this.state.isToggle === false && task.completed === false ? 
+                                    <div key={task.id} className="list-group-item">
+                                        <h6>{task.task}</h6>
+                                        <p>{task.body}</p>
+                                        <p input type={Date}>{task.timestamp.substring(0,10)}</p>
+                                        <p>{task.completed}</p>
+                                        {task.id ? <div>
+                                            <DeleteTask toDelete={task.id}/> 
+                                            <EditTask editTask={task}/>
+                                        </div>: null}
+                                    </div> 
+                                : null
+                            )}
                         </ul>
                     </div>
                 </div>
@@ -80,7 +102,6 @@ class Main extends Component {
                 </ModalBody>
             </Modal>
         </div>
-      
         )
     }
 }
