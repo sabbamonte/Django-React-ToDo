@@ -4,6 +4,7 @@ import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import AddTask from "./AddTaskComponent";
 import DeleteTask from "./DeleteTaskComponent";
 import EditTask from "./EditTaskComponent";
+import Complete from "./CompleteComponent";
 
 
 class Main extends Component {
@@ -13,7 +14,8 @@ class Main extends Component {
         this.state = {
             Tasks: [],
             isModalOpen: false,
-            isToggle: false
+            isToggle: false,
+            completed: false
         };
 
         this.toggleModal = this.toggleModal.bind(this);
@@ -52,19 +54,19 @@ class Main extends Component {
     }
 
     render() {
+        const buttonOne = <button onClick={this.handleClick} className="form-group btn btn-success"> Completed </button>
+        const buttonTwo = <button onClick={this.handleClick} className="form-group btn btn-danger"> Back to Open Tasks </button>
+        const buttonThree = <button onClick={this.toggleModal} className="form-group btn btn-dark">Add Task</button>
+        
         return (
         <div className="container">
             <h1 className="text-white text-uppercase text-center my-4">TASKS</h1>
             <div className="row">
                 <div className="col-md-6 col-sm-10 mx-auto p-0">
                     <div className="card p-3">
-                        <div className="mb-4">
-                            <button onClick={this.toggleModal} className="btn btn-dark">
-                                Add task
-                            </button>
-                            <button onClick={this.handleClick} className="btn btn-dark">
-                                {this.state.isToggle === false ? "Completed" : "Open Tasks"}
-                            </button> 
+                        <div className="mb-4 btn-group">
+                            {this.state.isToggle === false ? buttonThree: null}
+                            {this.state.isToggle === false ? buttonOne: buttonTwo}
                         </div>
                         <ul className="list-group list-group-flush border-top-0">
                             {this.state.Tasks.map((task) => 
@@ -84,10 +86,13 @@ class Main extends Component {
                                         <p>{task.body}</p>
                                         <p input type={Date}>{task.timestamp.substring(0,10)}</p>
                                         <p>{task.completed}</p>
-                                        {task.id ? <div>
-                                            <DeleteTask toDelete={task.id}/> 
-                                            <EditTask editTask={task}/>
-                                        </div>: null}
+                                        {task.id ? 
+                                            <div className="btn-group">
+                                                <EditTask editTask={task}/>
+                                                <DeleteTask toDelete={task.id}/> 
+                                            </div>
+                                        : null}
+                                        <Complete task={task}/>
                                     </div> 
                                 : null
                             )}

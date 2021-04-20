@@ -1,3 +1,11 @@
 body {
+  font-family: 'Chivo', sans-serif;
+  font-weight: 300;
   background-color: black;
-}
+ }
+ 
+ h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-style: italic;
+ }

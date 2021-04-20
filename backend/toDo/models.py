@@ -5,6 +5,6 @@ from django.db import models
 class Tasks(models.Model):
     objects = models.Manager()
     task = models.CharField(max_length=120)
-    body = models.CharField(max_length=200)
+    body = models.CharField(max_length=200, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)

@@ -8,9 +8,9 @@ class EditTask extends Component {
         super(props)
 
         this.state = {
-            title: '',
-            body: '',
-            completed: false,
+            title: this.props.editTask.task,
+            body: this.props.editTask.body,
+            completed: this.props.editTask.completed,
             isModalOpen: false
         }
 
@@ -34,12 +34,13 @@ class EditTask extends Component {
             [name]: value
         });
 
+
     }
 
     handleSubmit() {
 
         axios.put(`/api/tasks/${this.props.editTask.id}/`, {
-        
+            
             task: this.state.title,
             body: this.state.body,
             completed: this.state.completed
@@ -58,10 +59,9 @@ class EditTask extends Component {
     render() {
         return(
             <div>
-                <button className="form-group btn btn-dark" onClick={this.toggleModal}>
+                <button className="btn btn-dark btn-sm" onClick={this.toggleModal} style={{margin:  '1px'}}>
                     Edit Task
                 </button>
-            
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} closeTimeoutMS={500}>
                     <ModalHeader toggle={this.toggleModal}>Edit Task</ModalHeader>
                     <ModalBody>
@@ -71,7 +71,6 @@ class EditTask extends Component {
                                 <Col md={10}>
                                     <Input type="text" id="title" name="title"
                                     value={this.state.title}
-                                    placeholder={this.props.editTask.task}
                                     onChange={this.handleInputChange}/> 
                                 </Col>
                             </FormGroup>
@@ -80,12 +79,11 @@ class EditTask extends Component {
                                 <Col md={10}>
                                     <Input type="text" id="body" name="body"
                                     value={this.state.body}
-                                    placeholder={this.props.editTask.body}
                                     onChange={this.handleInputChange}/> 
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Col md={{offset: 0}}>
+                                <Col md={1}>
                                 <FormGroup check>
                                     <Label check>
                                         <Input type="checkbox"
