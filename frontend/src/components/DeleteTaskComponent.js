@@ -19,20 +19,14 @@ class DeleteTask extends Component {
             console.log(error);
     
         })
-
-        window.location.reload(false);
-
     }
 
     render() {
         return(
-            
             <Form onSubmit={this.handleSubmit}>
                 <Button className="btn btn-dark btn-sm" style={{margin:  '1px'}}>
                     Delete Task
                 </Button>
-                
-                
             </Form>    
         )
     }
