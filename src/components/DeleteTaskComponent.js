@@ -11,10 +11,7 @@ class DeleteTask extends Component {
 
     handleSubmit() {
         
-        axios.defaults.xsrfCookieName = 'csrftoken'
-        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-        
-        axios.delete(`/api/tasks/${this.props.toDelete}`)
+        axios.delete(`/api/tasks/${this.props.toDelete}/`)
     
         .then((response) => {
             console.log(response);
