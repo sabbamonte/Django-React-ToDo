@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['react-django-tasks.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
