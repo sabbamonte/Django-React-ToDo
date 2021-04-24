@@ -26,7 +26,8 @@ SECRET_KEY = '9b3nafjsdyt&6jnp6^#u_y_$k1**(mos=u9iq+s@e_60)=7@ue'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['react-django-tasks.herokuapp.com', '127.0.0.1']
+
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
