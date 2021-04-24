@@ -26,8 +26,7 @@ SECRET_KEY = '9b3nafjsdyt&6jnp6^#u_y_$k1**(mos=u9iq+s@e_60)=7@ue'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['react-django-tasks.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -127,7 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
 ]
